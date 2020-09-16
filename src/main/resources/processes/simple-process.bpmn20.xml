@@ -3,36 +3,32 @@
     <process id="ulinzi-simple-process" name="Ulinzi Abridged process" isExecutable="true">
         <startEvent id="startevent1" name="Start">
         </startEvent>
-        <userTask id="usertask1" name="Buyer Pays"></userTask>
-        <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-        <sequenceFlow id="flow1" sourceRef="usertask1" targetRef="exclusivegateway1"></sequenceFlow>
-        <userTask id="usertask2" name="Seller Ships"></userTask>
+        <userTask id="usertask1" name="Buyer Pays"/>
+        <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"/>
+        <sequenceFlow id="flow1" sourceRef="usertask1" targetRef="exclusivegateway1"/>
+        <userTask id="usertask2" name="Seller Ships"/>
         <sequenceFlow id="flow2" name="Successful payment" sourceRef="exclusivegateway1" targetRef="usertask2">
             <conditionExpression xsi:type="tFormalExpression"><![CDATA[${paymentStatus == "success"}]]></conditionExpression>
         </sequenceFlow>
-        <endEvent id="cancelendevent1" name="CancelEnd">
-            <cancelEventDefinition></cancelEventDefinition>
-        </endEvent>
+        <endEvent id="cancelendevent1" name="CancelEnd"/>
         <sequenceFlow id="flow3" name="Failed payment" sourceRef="exclusivegateway1" targetRef="cancelendevent1">
             <conditionExpression xsi:type="tFormalExpression"><![CDATA[${paymentStatus == "failed"}]]></conditionExpression>
         </sequenceFlow>
-        <sequenceFlow id="flow4" name="Transaction created" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
-        <userTask id="usertask3" name="User Verifies"></userTask>
-        <sequenceFlow id="flow5" name="Shipment received" sourceRef="usertask2" targetRef="usertask3"></sequenceFlow>
-        <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
-        <sequenceFlow id="flow6" sourceRef="usertask3" targetRef="exclusivegateway2"></sequenceFlow>
-        <endEvent id="cancelendevent2" name="CancelEnd">
-            <cancelEventDefinition></cancelEventDefinition>
-        </endEvent>
+        <sequenceFlow id="flow4" name="Transaction created" sourceRef="startevent1" targetRef="usertask1"/>
+        <userTask id="usertask3" name="User Verifies"/>
+        <sequenceFlow id="flow5" name="Shipment received" sourceRef="usertask2" targetRef="usertask3"/>
+        <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"/>
+        <sequenceFlow id="flow6" sourceRef="usertask3" targetRef="exclusivegateway2"/>
+        <endEvent id="cancelendevent2" name="CancelEnd"/>
         <sequenceFlow id="flow7" sourceRef="exclusivegateway2" targetRef="cancelendevent2">
             <conditionExpression xsi:type="tFormalExpression"><![CDATA[${productDeliveryStatus == "failure"}]]></conditionExpression>
         </sequenceFlow>
-        <serviceTask id="servicetask1" name="Seller gets creditted"></serviceTask>
+        <serviceTask id="servicetask1" name="Seller gets creditted"/>
         <sequenceFlow id="flow8" sourceRef="exclusivegateway2" targetRef="servicetask1">
             <conditionExpression xsi:type="tFormalExpression"><![CDATA[${productDeliveryStatus == "success"}]]></conditionExpression>
         </sequenceFlow>
-        <endEvent id="endevent1" name="End"></endEvent>
-        <sequenceFlow id="flow9" sourceRef="servicetask1" targetRef="endevent1"></sequenceFlow>
+        <endEvent id="endevent1" name="End"/>
+        <sequenceFlow id="flow9" sourceRef="servicetask1" targetRef="endevent1"/>
         <dataObject id="paymentStatus" name="Payment Status" itemSubjectRef="xsd:string">
             <extensionElements>
                 <activiti:value>failure</activiti:value>
