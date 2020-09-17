@@ -23,7 +23,7 @@
         <sequenceFlow id="flow7" sourceRef="exclusivegateway2" targetRef="cancelendevent2">
             <conditionExpression xsi:type="tFormalExpression"><![CDATA[${productDeliveryStatus == "failure"}]]></conditionExpression>
         </sequenceFlow>
-        <serviceTask id="servicetask1" name="Seller gets creditted"/>
+        <serviceTask id="servicetask1" name="Seller gets creditted" activiti:expression="${codeTask.creditSeller(sellerId)}" activiti:resultVariableName="sellerCredited"></serviceTask>
         <sequenceFlow id="flow8" sourceRef="exclusivegateway2" targetRef="servicetask1">
             <conditionExpression xsi:type="tFormalExpression"><![CDATA[${productDeliveryStatus == "success"}]]></conditionExpression>
         </sequenceFlow>
